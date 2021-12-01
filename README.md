@@ -5,3 +5,9 @@ PineActions is a basic re-implementation of some [Moto Actions](https://play.goo
 
  - [ ] Twist camera
  - [x] Twist torch
+
+## TODO:
+
+- Vibrations when turning on torch
+- Systemd unit
+- AUR package
