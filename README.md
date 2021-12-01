@@ -11,3 +11,7 @@ PineActions is a basic re-implementation of some [Moto Actions](https://play.goo
 - Vibrations when turning on torch
 - Systemd unit
 - AUR package
+
+## Thanks
+- postmarketOS and their [docs](https://wiki.postmarketos.org/wiki/Phosh) for documentation of the gyro and led descriptors.
+- [clickclack](https://git.sr.ht/~proycon/clickclack) for its insight into how to control the haptic motor.
