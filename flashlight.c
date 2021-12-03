@@ -35,7 +35,8 @@ int exit_error(char *msg) {
     return EXIT_FAILURE;
 }
 
-
+// Shamelessly ripped off from here: https://git.sr.ht/~proycon/clickclack/tree/master/item/clickclack.c#L176
+// Thanks goes to Maarten van Gompel!
 void vibrate() {
     int fd, ret;
     int effects;
