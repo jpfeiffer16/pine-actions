@@ -3,9 +3,9 @@ build:
 	gcc -o ./bin/flashlight ./flashlight.c
 
 install:
-	cp ./bin/flashlight /usr/bin
-	cp ./pine-actions-flashlight.service /usr/lib/systemd/system/
+	cp ./bin/flashlight ${DESTDIR}/usr/bin
+	cp ./pine-actions-flashlight.service ${DESTDIR}/usr/lib/systemd/system/
 
 uninstall:
-	rm /usr/bin/flashlight
-	rm /usr/lib/systemd/system/pine-actions-flashlight.service
+	rm ${DESTDIR}/usr/bin/flashlight
+	rm ${DESTDIR}/usr/lib/systemd/system/pine-actions-flashlight.service
