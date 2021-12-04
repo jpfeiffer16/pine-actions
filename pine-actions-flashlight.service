@@ -1,0 +1,10 @@
+[Unit]
+Description=Pine Actions Twist Flashlight
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStart=/usr/bin/flashlight
+
+[Install]
+WantedBy=multi-user.target
