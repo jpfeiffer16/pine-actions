@@ -18,7 +18,7 @@ From source:
 git clone git@github.com:jpfeiffer16/Pine-Actions.git
 cd Pine-Actions
 make
-make install
+sudo make install
 sudo systemctl enable twist-flashlight.service
 sudo systemctl start twist-flashlight.service
 ```
