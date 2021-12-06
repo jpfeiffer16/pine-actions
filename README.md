@@ -8,7 +8,6 @@ PineActions is a basic re-implementation of some [Moto Actions](https://play.goo
 
 ## TODO:
 
-- Systemd unit
 - AUR package
 
 ## Thanks
