@@ -2,9 +2,9 @@
 Description=Pine Actions Twist Flashlight
 
 [Service]
-TimeoutStartSec=0
+TimeoutStartSec=5
 Restart=always
-ExecStart=/usr/bin/flashlight
+ExecStart=/usr/bin/twist-flashlight
 
 [Install]
 WantedBy=multi-user.target
