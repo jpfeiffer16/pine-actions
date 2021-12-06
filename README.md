@@ -6,10 +6,6 @@ PineActions is a basic re-implementation of some [Moto Actions](https://play.goo
  - [ ] Twist camera
  - [x] Twist flashlight
 
-## TODO:
-
-- AUR package
-
 ## Installing
 
 From source:
@@ -25,7 +21,12 @@ sudo systemctl start twist-flashlight.service
 
 AUR(Any Arch-based distro):
 
-An aur package is being worked on now. For now you can just build from source.
+There is a [pine-actions](https://aur.archlinux.org/packages/pine-actions/) package.
+
+For example, using `yay`:
+```shell
+yay -S pine-actions
+```
 
 ## Thanks
 - postmarketOS and their [docs](https://wiki.postmarketos.org/wiki/Phosh) for documentation of the gyro and led descriptors.
