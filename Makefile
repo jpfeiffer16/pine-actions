@@ -1,11 +1,11 @@
 build:
 	mkdir -p ./bin
-	gcc -o ./bin/flashlight ./flashlight.c
+	gcc -o ./bin/twist-flashlight ./twist-flashlight.c
 
 install:
-	cp ./bin/flashlight ${DESTDIR}/usr/bin
-	cp ./pine-actions-flashlight.service ${DESTDIR}/usr/lib/systemd/system/
+	cp ./bin/twist-flashlight ${DESTDIR}/usr/bin
+	cp ./twist-flashlight.service ${DESTDIR}/usr/lib/systemd/system/
 
 uninstall:
-	rm ${DESTDIR}/usr/bin/flashlight
-	rm ${DESTDIR}/usr/lib/systemd/system/pine-actions-flashlight.service
+	rm ${DESTDIR}/usr/bin/twist-flashlight
+	rm ${DESTDIR}/usr/lib/systemd/system/twist-flashlight.service
