@@ -17,9 +17,9 @@ FILE *torch_fd;
 char *z_delta_buff;
 char *torch_stat_buff;
 
-/* static int strength = 4000; */
-static int strength = 8000;
-static int duration = 300; //in milliseconds
+#define VIBRATE_STRENGTH 8000
+#define VIBRATE_DURATION 300
+#define MAX_PATH_SIZE 256
 
 void cleanup()
 {
@@ -57,7 +57,7 @@ void vibrate() {
     struct ff_effect e = {
         .type = FF_RUMBLE,
         .id = -1,
-        .u.rumble = { .strong_magnitude = strength },
+        .u.rumble = { .strong_magnitude = VIBRATE_STRENGTH },
     };
 
     if (ioctl(fd, EVIOCSFF, &e) < 0) {
@@ -73,7 +73,7 @@ void vibrate() {
         return;
     }
 
-    usleep(duration * 1000);
+    usleep(VIBRATE_DURATION * 1000);
 
     if (ioctl(fd, EVIOCRMFF, e.id) < 0) {
         fprintf(stderr, "EVIOCRMFF failed\n");
@@ -90,19 +90,17 @@ int main(int argc, char **argv) {
     clock_t first_shake = 0;
     clock_t bottomed = 0;
 
-    //TODO: Refactor this. Remove chances for overflows, magic numbers.
     DIR *io_dirs;
     struct dirent *dir;
     char *devices_path = "/sys/bus/iio/devices/" ;
     io_dirs = opendir(devices_path);
-    char accel_path[256] = {};
+    char accel_path[MAX_PATH_SIZE] = {};
     if (io_dirs) {
-	char device_dir_path[256];
+	char device_dir_path[MAX_PATH_SIZE];
 	while ((dir = readdir(io_dirs)) != NULL) {
 	    device_dir_path[0] = '\0';
-	    // TODO: Figure out how do do this correctly 
-	    strlcat(device_dir_path, devices_path, 256);
-	    strlcat(device_dir_path, dir->d_name, 256);
+	    strlcat(device_dir_path, devices_path, MAX_PATH_SIZE);
+	    strlcat(device_dir_path, dir->d_name, MAX_PATH_SIZE);
 
 	    DIR *io_devices;
 	    struct dirent *subdir;
@@ -151,7 +149,7 @@ int main(int argc, char **argv) {
                 if (z_delta > 6000 && bottomed) {
                     first_shake = 0;
                     bottomed = 0;
-                    printf("%s", "Change");
+                    printf("%s", "Change\n");
                     if (fread(torch_stat_buff, 1, 1, torch_fd) == 0) {
                         return exit_error("Error reading internal torch state.");
                     }
