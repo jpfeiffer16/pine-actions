@@ -8,6 +8,7 @@
 #include <sys/ioctl.h>
 #include <linux/input.h>
 #include <fcntl.h>
+#include <dirent.h>
 
 const char TORCH_ON = '1';
 
@@ -89,9 +90,43 @@ int main(int argc, char **argv) {
     clock_t first_shake = 0;
     clock_t bottomed = 0;
 
-    // TODO: Find a way to dynamically look this path up so that it doesn't break when 
-    // udev assignes the device to a different file.
-    if ((z_ang_vel_fd = fopen("/sys/bus/iio/devices/iio:device2/in_anglvel_z_raw", "r")) == 0) {
+    //TODO: Refactor this. Remove chances for overflows, magic numbers.
+    DIR *io_dirs;
+    struct dirent *dir;
+    char *devices_path = "/sys/bus/iio/devices/" ;
+    io_dirs = opendir(devices_path);
+    char accel_path[256] = {};
+    if (io_dirs) {
+	char device_dir_path[256];
+	while ((dir = readdir(io_dirs)) != NULL) {
+	    device_dir_path[0] = '\0';
+	    // TODO: Figure out how do do this correctly 
+	    strlcat(device_dir_path, devices_path, 256);
+	    strlcat(device_dir_path, dir->d_name, 256);
+
+	    DIR *io_devices;
+	    struct dirent *subdir;
+	    io_devices = opendir(device_dir_path);
+	    while ((subdir = readdir(io_devices)) != NULL) {
+		if (strcmp(subdir->d_name, "in_anglvel_z_raw") == 0) {
+		    strcat(accel_path, device_dir_path);
+		    strcat(accel_path, "/");
+		    strcat(accel_path, subdir->d_name);
+		    printf("Found gyro: %s\n", accel_path);
+		    break;
+		}
+	    }
+	    closedir(io_devices);
+	    if (*accel_path) break;
+	}
+	closedir(io_dirs);
+    }
+
+    if (!strlen(accel_path)) {
+	exit_error("Error finding internal gyro.");
+    }
+
+    if ((z_ang_vel_fd = fopen(accel_path, "r")) == 0) {
         return exit_error("Error accessing internal gyro.");
     }
 
